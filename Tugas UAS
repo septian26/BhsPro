@@ -1,0 +1,304 @@
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Vector;
+import java.io.*;
+import java.util.*;
+public class BelanjaHemat{
+  
+  public static int max=6;
+  
+  public String getTanggal() {
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    Date date = new Date();
+    return dateFormat.format(date);
+  }
+  //Memanggil data yang ada di main  
+  //}
+  //public static void Pinoy(){
+    //System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    ///System.out.println("+++++++++++++++Selamat Datang Di BelanjaHemat+++++++++++++++");
+    //System.out.println("+++++++++++++++Selamat Berbelanja+++++++++++++++");
+    //System.out.println("++++ Kode || Daftar Barang || Daftar Harga ++++");
+    //System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+  //for(int i=0;i<kodar.length;i++)
+  // int i dimulai dari 0 sampai sebelum i  
+  // length = Panjang isi array
+  // i++ = setiap data setelah diulang ditambah 1
+  //{
+    //System.out.print("   "+kodar[i]+"   ");
+    //System.out.print("      ||    "+brg[i]);
+    //System.out.println("      ||    "+harga[i]);
+  //}
+  
+    public static String[]kodar={"RD1","RD2","RD3","RD4","RD5","RD6","RD7","RD8","RD9","RD10"};
+    public static String[]brg={"Mie","Aqua","Sendok","Sabun","Piring","Buku","Permen","Coklat","Penggaris","Penghapus"};
+      public static int []hargajual={1500,500,3000,4500,7000,4000,6000,12000,4000,2000};
+      public static int []hargabeli={1000,250,2000,3000,5000,2000,4000,8000,2500,1000};
+  
+       public static Vector<String> kodes = new Vector<String>();
+       public static Vector<String> kodeh = new Vector<String>();
+       public static Vector<Integer> jmlBelis = new Vector<Integer>();
+       public static Vector<Integer> hargabrgs = new Vector<Integer>();
+       public static Vector<String> namabrgs = new Vector<String>();
+       public static Vector<Integer> jmlBelih = new Vector<Integer>();
+       public static Vector<Integer> hargabrgh = new Vector<Integer>();
+       public static Vector<String> namabrgh = new Vector<String>();
+       public static Vector<Integer> totalBlanja = new Vector<Integer>();
+       
+public static void tampilbarang(){
+  for(int i=0;i<kodar.length;i++){
+    System.out.print(kodar[i]+"  ");
+    System.out.print(brg[i]+"  ");
+    System.out.println(hargajual[i]);
+  }
+}
+  
+  public static void main(String[]args) throws IOException{
+    
+    Scanner scan= new Scanner(System.in);
+   BufferedReader input = new BufferedReader(new InputStreamReader(System.in)); 
+   int jumlahbeli=0;
+   String keputusan="Y";
+    int nota=1;
+    int totalbeli=0;
+    int total=0;
+    try{
+    while (keputusan.equals("Y")||keputusan.equals("y"))
+        {
+
+    System.out.println("||||| [1] Daftar Barang [1] |||||");
+    System.out.println("||||| [2] Maintance Data Barang [2] |||||");
+    System.out.println("||||| [3] Beli Barang [3] |||||");
+    System.out.println("||||| [4] Total Bayar [4] |||||");
+    int pil=scan.nextInt();
+    switch(pil){
+      case(1):
+    tampilbarang();
+    break;
+      case(2):
+        System.out.println("|||| [1] Menambah Barang Baru [1] ||||");
+        System.out.println("|||| [2] Mengupdate Data Barang [2] ||||");
+        System.out.println("|||| [3] Menghapus Data Barang [3] ||||");
+        int dalampil=scan.nextInt();
+        switch(dalampil){
+          case(1):
+          String []kodebaru = new String[kodar.length];
+          String []barangbaru = new String[brg.length];
+          int []hargabaru = new int [hargajual.length];
+          System.out.print("Masukkan Kode Barang Anda");
+          String nkdbrg = scan.next();
+          System.out.print("Masukkan Nama Barang Anda");
+          String nmbrg = scan.next();
+          System.out.print("Masukkan Harga Barang Anda");
+          int hrgbrg = scan.nextInt();
+          System.arraycopy(kodar,0,kodebaru,0,kodar.length);
+          System.arraycopy(brg,0,barangbaru,0,brg.length);
+          System.arraycopy(hargajual,0,hargabaru,0,hargajual.length);
+          kodar=new String[kodar.length+1];
+          brg=new String[brg.length+1];
+          hargajual=new int[hargajual.length+1];
+          System.arraycopy(kodebaru,0,kodar,0,kodebaru.length);
+          System.arraycopy(barangbaru,0,brg,0,barangbaru.length);
+          System.arraycopy(hargabaru,0,hargajual,0,hargabaru.length);
+          kodar[kodar.length-1]=nkdbrg;
+          brg[brg.length-1]=nmbrg;
+          hargajual[hargajual.length-1]=hrgbrg;
+          
+           System.out.println("Data Barang Telah Berhasil Di Tambah");
+            break;
+            
+          case(2):
+            tampilbarang();
+             int idx=-1;
+       System.out.print("Masukkan Kode Barang yang akan diupdate");
+       String update=scan.next();
+          for (int u=0;u<kodar.length;u++)
+          {
+            if (kodar[u].equals(update))
+            {
+              idx=u;
+              
+            }
+          }
+          if(idx==-1)
+          {
+            System.out.println("Data tidak ditemukan!");
+            break;
+          }
+          System.out.println("Apakah anda akan mengupdate Daftar Barang ?");
+          System.out.println("Kode "+kodar[idx]);
+           System.out.println(" Nama Barang "+brg[idx]);
+            System.out.println(" Harga "+hargajual[idx]);
+           System.out.println("Y/T");
+          String jawab=scan.next();
+          if (jawab.equalsIgnoreCase("Y")){
+          System.out.print("Masukan Nama Baru Pada Kode "+kodar[idx]+" : ");
+          String nmup=scan.next();
+          System.out.print("Masukan Harga Baru Pada Kode "+kodar[idx]+" : ");
+          int hrgup=scan.nextInt();
+          brg[idx]=nmup;
+          hargajual[idx]=hrgup;
+          }
+          break;
+          case(3):
+             tampilbarang();
+            
+               //hapus data
+      int index=-1;
+      int j=-1;
+      //aray baru buat hapus data
+       String []kodenew=new String[kodar.length-1];
+       String []barangnew=new String[brg.length-1];
+       int []harganew=new int [hargajual.length-1]; 
+       System.out.print("Masukan Kode Barang yang akan dihapus");
+       String hapus=scan.next();
+       //mencari
+       for (int n=0;n<kodar.length;n++)
+       {
+         if (kodar[n].equals(hapus))
+         {
+           index=n;
+           j=n;
+         }
+}
+       if(index==-1)
+       {
+         System.out.println("Data Not Found!");
+        break;
+       }
+      System.out.print("Apakah anda akan mengupdate Daftar Barang Kode "+kodar[index]+
+                       " Nama Barang "+brg[index]+" Harga : "+hargajual[index]+" ?[Y/N]");
+      jawab=scan.next(); 
+      if (jawab.equalsIgnoreCase("Y")){
+         //memindah semua data sebelum index  
+         
+         System.arraycopy(kodar,0,kodenew,0,index);
+         System.arraycopy(brg,0,barangnew,0,index);
+         System.arraycopy(hargajual,0,harganew,0,index);
+         //mengisi sesudah index
+         
+         System.arraycopy(kodar,(index+1),kodenew,index,(kodar.length-index)-1);
+         System.arraycopy(brg,(index+1),barangnew,index,(brg.length-index)-1);
+         System.arraycopy(hargajual,(index+1),harganew,index,(hargajual.length-index)-1);
+         
+         //memindah array baru ke array lama kembali
+         kodar=new String[kodenew.length];
+         brg=new String[barangnew.length];
+         hargajual=new int[harganew.length];
+         /*for (int i=0;i<newnim.length;i++)
+         {
+           daftarNim[i]=newnim[i];
+           daftarNama[i]=newnama[i];
+         }*/
+         System.arraycopy(kodenew,0,kodar,0,kodenew.length);
+         System.arraycopy(barangnew,0,brg,0,barangnew.length);
+         System.arraycopy(harganew,0,hargajual,0,harganew.length);
+
+       }
+              break;
+            
+            }
+        break;
+        
+      case(3):
+        System.out.println("Masukkan Jumlah Barang Yang Dibeli =");
+         jumlahbeli= Integer.parseInt(input.readLine());
+        tampilbarang();
+
+
+        for (int u=0;u<jumlahbeli;u++){
+          
+          
+          
+        System.out.println("Silahkan Masukkan Kode Barang Anda =");
+        String kdbarang=input.readLine();
+
+     
+        for (int k=0; k<kodar.length; k++){
+        
+        if(kdbarang.equals(kodar[k])){
+         
+           
+          
+          
+        kodes.add(kdbarang);
+        kodeh.add(kdbarang);
+        
+        
+        System.out.println(brg[k]+" "+hargajual[k]);
+        System.out.println("Anda Ingin Beli Berapa Barang ?");
+        int jumlah=Integer.parseInt(input.readLine());
+ 
+        jmlBelis.add(jumlah);
+        hargabrgs.add(hargajual[k]);
+        namabrgs.add(brg[k]);
+        
+        jmlBelih.add(jumlah);
+        hargabrgh.add(hargajual[k]);
+        namabrgh.add(brg[k]);
+      
+        }
+    
+        } 
+  
+   
+        }
+  
+
+        break;
+      case(4):
+        System.out.println();
+         System.out.println("Transaksi Ke = "+nota);
+
+          nota++;
+         System.out.print("Kode"+"\t");
+         System.out.print("Barang"+"\t");
+         System.out.print("Jumlah"+"\t");
+         System.out.print("Harga"+"\t");
+         System.out.print("Total satuan");
+         
+        
+
+        for (int h=0;h<jumlahbeli;h++){
+          totalbeli= jmlBelih.elementAt(h)*hargabrgh.elementAt(h);
+          total+=hargabrgh.elementAt(h)*jmlBelih.elementAt(h);
+          
+          System.out.println();
+        System.out.println(kodeh.elementAt(h)+"\t"+ namabrgh.elementAt(h)+"\t" + 
+                         jmlBelih.elementAt(h)+"\t"+ hargabrgh.elementAt(h)+"\t"+totalbeli);
+        
+        }
+       
+        System.out.print("||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+        System.out.println("  Total Transaksi"+"\t"+"\t"+"\t"+total);
+        System.out.print("||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+
+        kodeh.clear();
+        hargabrgh.clear();
+        jmlBelih.clear();
+        namabrgh.clear();
+        
+         total=0;
+
+         int omset=0;
+         
+        System.out.println("Omset Anda");
+        for(int b=0;b<hargabrgs.size();b++){
+          int omsetp=(jmlBelis.elementAt(b)*(hargabrgs.elementAt(b)-hargabeli[b]));
+          omset = omsetp+omset ;
+          
+        }
+        System.out.println("omset anda = "+omset);
+        
+        
+         break;
+        
+        
+    }
+    }            }catch(IOException e){
+                 System.out.println("Gagal Membaca Keyboard");
+            }
+            
+  }
+}
